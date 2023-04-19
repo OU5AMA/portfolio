@@ -1,0 +1,15 @@
+{
+  "name": "portfolio01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./back-end/server.js"
+  },
+  "keywords": [
+    "portfolio"
+  ],
+  "author": "Ousama Lasri",
+  "license": "ISC"
+}
