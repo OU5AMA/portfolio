@@ -459,17 +459,407 @@ ligula sit amet est.</p>
 
         <div class="blog-recent-post-item row">
           <div class="c12 end">
-            <a class="recent-post-img" href="#" rel="">
+            <a class="recent-post-img" href="https://www.freecodecamp.org/news/fetch-data-react/" rel="">
               <img src="a_data_002/blog2.jpg" alt="Blog">
               <span class="date"><span class="day">26</span> Feb 2023</span>
             </a>
             <h2 class="gamma entry-title"><a href="#" rel="">How to Fetch Data in React: Cheat Sheet + Examples</a></h2>
-            <p>There are many ways to fetch data from an external API in React. But which one should
-              you be using for your applications in 2021?</p>
+            <p><b>There are many ways to fetch data from an external API in React. But which one should
+              you be using for your applications in 2021?</b></p>
             <p>In this tutorial, we will be reviewing five of the most commonly used patterns to
               fetch data with React by making an HTTP request to a REST API.</p>
-            <p>We will not only cover how to fetch data, but how to best handle loading and error
-              state upon fetching our data.</p>
+
+
+
+
+
+
+<p>We will not only cover how to fetch data, but how to best handle loading and error
+									state upon fetching our data.</p>
+								<p>Let’s get started!</p>
+								<blockquote>For all of these examples, we will be using an endpoint from the popular
+									JSON Placeholder API, but you can use your own API that you have created (such as a
+									Node API with Express) or any other public API.</blockquote>
+								<h3 id="want-your-own-copy-">Want Your Own Copy?‬</h3>
+								<p><strong><a href="http://bit.ly/react-fetch-data-2021">Click here to download the cheatsheet in PDF format</a> </strong>(it
+									takes 5 seconds).</p>
+								<p>It includes all of the essential information here as a convenient PDF guide.</p>
+								<h2 id="1-how-to-fetch-data-in-react-using-the-fetch-api">1. How to Fetch Data in React
+									Using the Fetch API </h2>
+								<p>The most accessible way to fetch data with React is using the Fetch API.</p>
+								<p>The Fetch API is a tool that's built into most modern browsers on the window object
+									(<code>window.fetch</code>) and enables us to make HTTP requests very easily using
+									JavaScript promises. </p>
+								<p>To make a simple GET request with fetch we just need to include the URL endpoint to
+									which we want to make our request. We want to make this request once our React
+									component has mounted. </p>
+								<p>To do so, we make our request within the useEffect hook, and we make sure to provide
+									an empty dependencies array as the second argument, so that our request is only made
+									once (assuming it's not dependent on any other data in our component).</p>
+								<figure class="kg-card kg-image-card kg-width-wide">
+									<img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-1-fetch-min.gif" class="kg-image" alt="clip-1-fetch-min" width="600" height="400" loading="lazy"></figure>
+									<p>Within the first <code>.then()</code> callback, we check to see if the response
+										was okay (<code>response.ok</code>). If so, we return our response to pass to
+										the next, then call back as JSON data, since that's the data we'll get back from
+										our random user API. </p>
+									<p>If it's not an okay response, we assume there was an error making the request.
+										Using fetch, we need to handle the errors ourselves, so we throw
+										<code>response</code> as an error for it to handled by our <code>catch</code>
+										callback. </p>
+									<p>Here in our example we are putting our error data in state with
+										<code>setError</code>. If there's an error we return the text "Error!". </p>
+									<blockquote>Note that you can also display an error message from the error object we
+										put in state by using <code>error.message</code>.</blockquote>
+									<p>We use the <code>.finally()</code> callback as function that is called when our
+										promise has resolved successfully or not. In it, we set <code>loading</code> to
+										false, so that we no longer see our loading text.</p>
+									<p>Instead we see either our data on the page if the request was made successfully,
+										or that there was an error in making the request if not.</p>
+									<h2 id="2-how-to-fetch-data-in-react-using-axios">2. How to Fetch Data in React
+										Using Axios</h2>
+									<p>The second approach to making requests with React is to use the library
+										<code>axios</code>. </p>
+									<p>In this example, we will simply revise our Fetch example by first installing
+										<code>axios</code> using npm:</p>
+									<pre><code class="language-bash">npm install axios</code></pre>
+									<p>Then we will import it at the top of our component file. </p>
+									<p>What axios enables us to do is to use the exact same promise syntax as fetch –
+										but instead of using our first then callback to manually determine whether the
+										response is okay and throw an error, axios takes care of that for us.</p>
+									<p>Additionally, it enables us in that first callback to get the JSON data from
+										<code>response.data</code>. </p>
+									<p>What's convenient about using axios is that it has a much shorter syntax that
+										allows us to cut down on our code and it includes a lot of tools and features
+										which Fetch does not have in its API. </p>
+									<p>All of these reasons are why it has become the go-to HTTP library for React
+										developers.</p>
+									<figure class="kg-card kg-image-card kg-width-wide">
+										<img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-2-axios-min.gif" class="kg-image" alt="clip-2-axios-min" width="1920" height="1080" loading="lazy"></figure>
+										<h2 id="3-how-to-fetch-data-in-react-using-async-await-syntax">3. How to Fetch
+											Data in React Using async / await syntax</h2>
+										<p>In ES7, it became possible to resolve promises using the
+											<code>async / await</code> syntax. </p>
+										<p>The benefit of this is that it enables us to remove our <code>.then()</code>,
+											<code>.catch()</code>, and <code>.finally()</code> callbacks and simply get
+											back our asynchronously resolved data as if we were writing synchronous code
+											without promises altogether. </p>
+										<p>In other words, we do not have to rely on callbacks when we use async / await
+											with React. </p>
+										<p>We have to be aware of the fact that when we use <code>useEffect</code>, the
+											effect function (the first argument) cannot be made an <code>async</code>
+											function. </p>
+										<p>If we take a look at the linting error that React gives us <a
+												href="https://reedbarger.com/create-react-app-10-steps">if we were using
+												Create React App</a> to build our project, we will be told that this
+											function cannot be asynchronous to prevent race conditions. </p>
+										<figure class="kg-card kg-image-card kg-width-wide">
+											<img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-3-async-await-min.gif" class="kg-image" alt="clip-3-async-await-min" width="1920" height="1080" loading="lazy"></figure>
+											<p>As a result, instead of making that function async, we can simply create
+												a separate async function in our component, which we can call
+												synchronously. That is, without the <code>await</code> keyword before
+												it. </p>
+											<p>In this example, we create an async function called <code>getData</code>.
+												By calling it synchronously within useEffect, we can fetch our data like
+												we would expect. </p>
+											<h2 id="4-how-to-fetch-data-in-react-using-a-custom-react-hook-usefetch-">4.
+												How to Fetch Data in React Using a Custom React Hook (useFetch)</h2>
+											<p>Over time, you may realize that it gets a bit tedious and time-consuming
+												to keep writing the useEffect hook with all of its boilerplate within
+												every component in which you want to fetch data. </p>
+											<p>To cut down on our reused code, we can use a custom hook as a special
+												abstraction, which we can write ourselves from a third party library
+												(like we are here, using the library <code>react-fetch-hook</code>).</p>
+											<p>A custom hook that makes our HTTP request allows us to make our
+												components much more concise. All we have to do is call our hook at the
+												top of our component.</p>
+											<figure class="kg-card kg-image-card kg-width-wide">
+												<img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-4-usefetch-min.gif" class="kg-image" alt="clip-4-usefetch-min" width="600" height="400" loading="lazy"></figure>
+												<p>In this case, we get back all the data, loading, and error state that
+													we need to be able to use the same structure for our component as
+													before, but without having to <code>useEffect</code>. Plus, we no
+													longer need to imperatively write how to resolve our promise from
+													our GET request every time we want to make a request.</p>
+												<h2 id="5-how-to-fetch-data-in-react-using-the-react-query-library">5.
+													How to Fetch Data in React Using the React Query Library</h2>
+												<p>Using custom hooks is a great approach to writing much more concise
+													HTTP requests to get our data and all of its related state. But a
+													library that really takes data fetching with hooks to the next level
+													is React Query. </p>
+												<p>React Query not only allows us to use custom hooks that we can reuse
+													across our components in a concise way, but it also gives us a great
+													deal of state management tools to be able to control when, how, and
+													how often our data is fetched. </p>
+												<p>In particular, React query gives us a cache, which you can see below
+													through the React Query Devtools. This enables us to easily manage
+													the requests that we have made according to key value that we
+													specify for each request. </p>
+												<p>For the requests below, our query for our random user data is
+													identified by the string 'random-user' (provided as the first
+													argument to <code>useQuery</code>).</p>
+												<figure class="kg-card kg-image-card kg-width-wide">
+													<img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-5-react-query-min.gif" class="kg-image" alt="clip-5-react-query-min" width="600" height="400" loading="lazy"></figure>
+													<p>By referencing that key, we can do powerful things such as
+														refetch, validate or reset our various queries.</p>
+													<blockquote>If we rely on our custom hook solution or useEffect, we
+														will refetch our data every single time our component is
+														mounted. To do this is in most cases unnecessary. If our
+														external state hasn't changed, we should ideally not have to
+														show loading state every time we display our component.
+													</blockquote>
+													<p>React Query improves our user experience greatly by trying to
+														serve our data from its cache first and then update the data in
+														the background to display changes if our API state has changed.
+													</p>
+													<p>It also gives us an arsenal of powerful tools to better manage
+														our requests according to how our data changes through our
+														request.</p>
+													<p>For example, if our application allowed us to add a different
+														user, we might want to refetch that query, once the user was
+														added. If we knew the query was being changed very frequently,
+														we might want to specify that it should be refreshed every
+														minute or so. Or to be refreshed whenever the user focuses their
+														window tab. </p>
+													<p>In short, React Query is the go-to solution for not only making
+														requests in a concise manner, but also efficiently and
+														effectively managing the data that is returned for our HTTP
+														requests across our app's components.</p>
+													<h2 id="want-to-keep-this-guide-for-future-reference-">Want to keep
+														this guide for future reference?‬</h2>
+													<p><strong><a href="http://bit.ly/react-fetch-data-2021">Click here to download the cheatsheet as a helpful PDF</a>.</strong>
+													</p>
+													<p>Here are 3 quick wins you get when you grab the downloadable
+														version:</p>
+													<ul>
+														<li>You'll get tons of copyable code snippets for easy reuse in
+															your own projects.</li>
+														<li>It is a great reference guide to strengthen your skills as a
+															React developer and for job interviews.</li>
+														<li>You can take, use, print, read, and re-read this guide
+															literally anywhere that you like.</li>
+													</ul>
+													<!--kg-card-begin: markdown-->
+													<h2 id="enjoyedthistutorialheresaspecialbonus">Enjoyed this
+														tutorial? Here's a special bonus.</h2>
+													<p>Reading tutorials are a great way to learn React, but there is no
+														replacement for hands-on coding.</p>
+													<p><a
+															href="https://www.learnreact.app"><strong>Introducing: the Learn React app</strong></a>
+													</p>
+													<p>The Learn React app is an interactive learning experience
+														designed to make you a confident React developer through 100s of
+														fun challenges.</p>
+													<p>Ready to level up your React skills? Click the link below to get
+														started!</p>
+
+ <!-- ###############################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ############################################################################################# -->
+
+
+                            <div class="readMoreContent" style="visibility: hidden; background-color: red;">
+                              <p>We will not only cover how to fetch data, but how to best handle loading and error
+                                state upon fetching our data.</p>
+                              <p>Let’s get started!</p>
+                              <blockquote>For all of these examples, we will be using an endpoint from the popular
+                                JSON Placeholder API, but you can use your own API that you have created (such as a
+                                Node API with Express) or any other public API.</blockquote>
+                              <h3 id="want-your-own-copy-">Want Your Own Copy?‬</h3>
+                              <p><strong><a href="http://bit.ly/react-fetch-data-2021">Click here to download the cheatsheet in PDF format</a> </strong>(it
+                                takes 5 seconds).</p>
+                              <p>It includes all of the essential information here as a convenient PDF guide.</p>
+                              <h2 id="1-how-to-fetch-data-in-react-using-the-fetch-api">1. How to Fetch Data in React
+                                Using the Fetch API </h2>
+                              <p>The most accessible way to fetch data with React is using the Fetch API.</p>
+                              <p>The Fetch API is a tool that's built into most modern browsers on the window object
+                                (<code>window.fetch</code>) and enables us to make HTTP requests very easily using
+                                JavaScript promises. </p>
+                              <p>To make a simple GET request with fetch we just need to include the URL endpoint to
+                                which we want to make our request. We want to make this request once our React
+                                component has mounted. </p>
+                              <p>To do so, we make our request within the useEffect hook, and we make sure to provide
+                                an empty dependencies array as the second argument, so that our request is only made
+                                once (assuming it's not dependent on any other data in our component).</p>
+                              <figure class="kg-card kg-image-card kg-width-wide">
+                                <img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-1-fetch-min.gif" class="kg-image" alt="clip-1-fetch-min" width="600" height="400" loading="lazy"></figure>
+                                <p>Within the first <code>.then()</code> callback, we check to see if the response
+                                  was okay (<code>response.ok</code>). If so, we return our response to pass to
+                                  the next, then call back as JSON data, since that's the data we'll get back from
+                                  our random user API. </p>
+                                <p>If it's not an okay response, we assume there was an error making the request.
+                                  Using fetch, we need to handle the errors ourselves, so we throw
+                                  <code>response</code> as an error for it to handled by our <code>catch</code>
+                                  callback. </p>
+                                <p>Here in our example we are putting our error data in state with
+                                  <code>setError</code>. If there's an error we return the text "Error!". </p>
+                                <blockquote>Note that you can also display an error message from the error object we
+                                  put in state by using <code>error.message</code>.</blockquote>
+                                <p>We use the <code>.finally()</code> callback as function that is called when our
+                                  promise has resolved successfully or not. In it, we set <code>loading</code> to
+                                  false, so that we no longer see our loading text.</p>
+                                <p>Instead we see either our data on the page if the request was made successfully,
+                                  or that there was an error in making the request if not.</p>
+                                <h2 id="2-how-to-fetch-data-in-react-using-axios">2. How to Fetch Data in React
+                                  Using Axios</h2>
+                                <p>The second approach to making requests with React is to use the library
+                                  <code>axios</code>. </p>
+                                <p>In this example, we will simply revise our Fetch example by first installing
+                                  <code>axios</code> using npm:</p>
+                                <pre><code class="language-bash">npm install axios</code></pre>
+                                <p>Then we will import it at the top of our component file. </p>
+                                <p>What axios enables us to do is to use the exact same promise syntax as fetch –
+                                  but instead of using our first then callback to manually determine whether the
+                                  response is okay and throw an error, axios takes care of that for us.</p>
+                                <p>Additionally, it enables us in that first callback to get the JSON data from
+                                  <code>response.data</code>. </p>
+                                <p>What's convenient about using axios is that it has a much shorter syntax that
+                                  allows us to cut down on our code and it includes a lot of tools and features
+                                  which Fetch does not have in its API. </p>
+                                <p>All of these reasons are why it has become the go-to HTTP library for React
+                                  developers.</p>
+                                <figure class="kg-card kg-image-card kg-width-wide">
+                                  <img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-2-axios-min.gif" class="kg-image" alt="clip-2-axios-min" width="1920" height="1080" loading="lazy"></figure>
+                                  <h2 id="3-how-to-fetch-data-in-react-using-async-await-syntax">3. How to Fetch
+                                    Data in React Using async / await syntax</h2>
+                                  <p>In ES7, it became possible to resolve promises using the
+                                    <code>async / await</code> syntax. </p>
+                                  <p>The benefit of this is that it enables us to remove our <code>.then()</code>,
+                                    <code>.catch()</code>, and <code>.finally()</code> callbacks and simply get
+                                    back our asynchronously resolved data as if we were writing synchronous code
+                                    without promises altogether. </p>
+                                  <p>In other words, we do not have to rely on callbacks when we use async / await
+                                    with React. </p>
+                                  <p>We have to be aware of the fact that when we use <code>useEffect</code>, the
+                                    effect function (the first argument) cannot be made an <code>async</code>
+                                    function. </p>
+                                  <p>If we take a look at the linting error that React gives us <a
+                                      href="https://reedbarger.com/create-react-app-10-steps">if we were using
+                                      Create React App</a> to build our project, we will be told that this
+                                    function cannot be asynchronous to prevent race conditions. </p>
+                                  <figure class="kg-card kg-image-card kg-width-wide">
+                                    <img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-3-async-await-min.gif" class="kg-image" alt="clip-3-async-await-min" width="1920" height="1080" loading="lazy"></figure>
+                                    <p>As a result, instead of making that function async, we can simply create
+                                      a separate async function in our component, which we can call
+                                      synchronously. That is, without the <code>await</code> keyword before
+                                      it. </p>
+                                    <p>In this example, we create an async function called <code>getData</code>.
+                                      By calling it synchronously within useEffect, we can fetch our data like
+                                      we would expect. </p>
+                                    <h2 id="4-how-to-fetch-data-in-react-using-a-custom-react-hook-usefetch-">4.
+                                      How to Fetch Data in React Using a Custom React Hook (useFetch)</h2>
+                                    <p>Over time, you may realize that it gets a bit tedious and time-consuming
+                                      to keep writing the useEffect hook with all of its boilerplate within
+                                      every component in which you want to fetch data. </p>
+                                    <p>To cut down on our reused code, we can use a custom hook as a special
+                                      abstraction, which we can write ourselves from a third party library
+                                      (like we are here, using the library <code>react-fetch-hook</code>).</p>
+                                    <p>A custom hook that makes our HTTP request allows us to make our
+                                      components much more concise. All we have to do is call our hook at the
+                                      top of our component.</p>
+                                    <figure class="kg-card kg-image-card kg-width-wide">
+                                      <img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-4-usefetch-min.gif" class="kg-image" alt="clip-4-usefetch-min" width="600" height="400" loading="lazy"></figure>
+                                      <p>In this case, we get back all the data, loading, and error state that
+                                        we need to be able to use the same structure for our component as
+                                        before, but without having to <code>useEffect</code>. Plus, we no
+                                        longer need to imperatively write how to resolve our promise from
+                                        our GET request every time we want to make a request.</p>
+                                      <h2 id="5-how-to-fetch-data-in-react-using-the-react-query-library">5.
+                                        How to Fetch Data in React Using the React Query Library</h2>
+                                      <p>Using custom hooks is a great approach to writing much more concise
+                                        HTTP requests to get our data and all of its related state. But a
+                                        library that really takes data fetching with hooks to the next level
+                                        is React Query. </p>
+                                      <p>React Query not only allows us to use custom hooks that we can reuse
+                                        across our components in a concise way, but it also gives us a great
+                                        deal of state management tools to be able to control when, how, and
+                                        how often our data is fetched. </p>
+                                      <p>In particular, React query gives us a cache, which you can see below
+                                        through the React Query Devtools. This enables us to easily manage
+                                        the requests that we have made according to key value that we
+                                        specify for each request. </p>
+                                      <p>For the requests below, our query for our random user data is
+                                        identified by the string 'random-user' (provided as the first
+                                        argument to <code>useQuery</code>).</p>
+                                      <figure class="kg-card kg-image-card kg-width-wide">
+                                        <img src="https://www.freecodecamp.org/news/content/images/2021/03/clip-5-react-query-min.gif" class="kg-image" alt="clip-5-react-query-min" width="600" height="400" loading="lazy"></figure>
+                                        <p>By referencing that key, we can do powerful things such as
+                                          refetch, validate or reset our various queries.</p>
+                                        <blockquote>If we rely on our custom hook solution or useEffect, we
+                                          will refetch our data every single time our component is
+                                          mounted. To do this is in most cases unnecessary. If our
+                                          external state hasn't changed, we should ideally not have to
+                                          show loading state every time we display our component.
+                                        </blockquote>
+                                        <p>React Query improves our user experience greatly by trying to
+                                          serve our data from its cache first and then update the data in
+                                          the background to display changes if our API state has changed.
+                                        </p>
+                                        <p>It also gives us an arsenal of powerful tools to better manage
+                                          our requests according to how our data changes through our
+                                          request.</p>
+                                        <p>For example, if our application allowed us to add a different
+                                          user, we might want to refetch that query, once the user was
+                                          added. If we knew the query was being changed very frequently,
+                                          we might want to specify that it should be refreshed every
+                                          minute or so. Or to be refreshed whenever the user focuses their
+                                          window tab. </p>
+                                        <p>In short, React Query is the go-to solution for not only making
+                                          requests in a concise manner, but also efficiently and
+                                          effectively managing the data that is returned for our HTTP
+                                          requests across our app's components.</p>
+                                        <h2 id="want-to-keep-this-guide-for-future-reference-">Want to keep
+                                          this guide for future reference?‬</h2>
+                                        <p><strong><a href="http://bit.ly/react-fetch-data-2021">Click here to download the cheatsheet as a helpful PDF</a>.</strong>
+                                        </p>
+                                        <p>Here are 3 quick wins you get when you grab the downloadable
+                                          version:</p>
+                                        <ul>
+                                          <li>You'll get tons of copyable code snippets for easy reuse in
+                                            your own projects.</li>
+                                          <li>It is a great reference guide to strengthen your skills as a
+                                            React developer and for job interviews.</li>
+                                          <li>You can take, use, print, read, and re-read this guide
+                                            literally anywhere that you like.</li>
+                                        </ul>
+                                        <!--kg-card-begin: markdown-->
+                                        <h2 id="enjoyedthistutorialheresaspecialbonus">Enjoyed this
+                                          tutorial? Here's a special bonus.</h2>
+                                        <p>Reading tutorials are a great way to learn React, but there is no
+                                          replacement for hands-on coding.</p>
+                                        <p><a
+                                            href="https://www.learnreact.app"><strong>Introducing: the Learn React app</strong></a>
+                                        </p>
+                                        <p>The Learn React app is an interactive learning experience
+                                          designed to make you a confident React developer through 100s of
+                                          fun challenges.</p>
+                                        <p>Ready to level up your React skills? Click the link below to get
+                                          started!</p>
+
+                            </div>
+
+                            <!-- ###############################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ##################################################################################################################
+                              ############################################################################################# -->
+
             <div class="entry-meta">
               <span>By <a class="dummy" href="#">Ousama Lasri</a></span>
               <span><time class="entry-date" datetime="2013-11-17T09:00:33+00:00">February 26, 2022</time></span>
@@ -479,7 +869,7 @@ ligula sit amet est.</p>
                 <a class="dummy" href="#" rel="category tag">Blog</a>
               </span>
               <a class="dummy" href="#">25 Comments</a>
-              <a class="readmore" href="#">Read more</a>
+              <a class="readmore" href="https://www.freecodecamp.org/news/fetch-data-react/">Read more</a>
             </div>
           </div>
         </div>
@@ -490,7 +880,8 @@ ligula sit amet est.</p>
               <span class="date"><span class="day">21</span> Feb 2022</span>
             </a>
             <h2 class="gamma entry-title"><a href="#" rel="">Explicabo Nemo</a></h2>
-            <p>As a junior web developer, I possess a strong command over programming languages including HTML, CSS, SCSS, JavaScript, and Java. With a specialization in utilizing the MERN (MongoDB, Express, React, Node.js) stack, I am well-equipped to develop modern and responsive web applications. My proficiency in front-end technologies such as HTML, CSS, and JavaScript, coupled with my expertise in back-end technologies including Node.js and MongoDB, enables me to create efficient and scalable web solutions. I am constantly expanding my skill set and eager to contribute to innovative projects with my solid foundation in web development and passion for coding.</p>
+            <p>I would like to add blogs to my the blogger part, but afraid to make the website slower, but in case you are reading this. I want you to have a look on the menu icon, the burger menu above, and check the filter I have made to navigate through the blog articles </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas doloribus beatae blanditiis debitis laboriosam autem, enim ullam pariatur vitae, dolor, ipsa deleniti iste molestias voluptatum reprehenderit nesciunt reiciendis necessitatibus voluptatem?</p>
             <div class="entry-meta">
               <span>By <a class="dummy" href="#">Ousama Lasri</a></span>
               <span><time class="entry-date" datetime="2013-11-17T09:00:33+00:00">February 21, 2023</time></span>
@@ -511,11 +902,7 @@ ligula sit amet est.</p>
               <span class="date"><span class="day">19</span> Feb 2023</span>
             </a>
             <h2 class="gamma entry-title"><a href="https://webdingo.net/akordian/blog-single-3.html" rel="">Illo inventore</a></h2>
-            <p>Bllo inventore veritatis et quasi architecto beatae vitae
- dicta sunt explicabo nemo enim ipsam voluptatem.voluptatem, illo 
-inventore veritatis et quasi architecto beatae vitae dicta sunt 
-explicabo nemo enim ipsam voluptatem. on ultricies nisi voluptatem, illo
- inventore veritatis et quasi architecto beatae vitae dicta sunt 
+            <p><b> I think I'm gonna rewrite the portfolio, either in react or nextjs. writing it in html makes it very difficult to manage the porject or add features. </b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis magnam, esse ad ratione veniam asperiores voluptates, inventore facilis dolorum iusto beatae soluta, ipsam omnis adipisci. Aut rerum labore ipsam sunt. 
 explicabo nemo enim ipsam voluptatem.voluptatem, illo inventore 
 veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo 
 enim ipsam voluptatem. Illo inventore veritatis et quasi architecto 
