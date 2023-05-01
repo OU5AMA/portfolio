@@ -38,6 +38,27 @@ $(document).ready(function() {
     let marker = new L.Marker([40.712776, -74.005974] , iconOptions);
     marker.addTo(map);
 
+	
+	/* ==========================================================================
+		   Testomonial & Client Slider
+		  ========================================================================== */
+
+	function downloadPDF() {
+		const pdfUrl = "../downloadable/Ousama_Lasri_CV.pdf";
+		const pdfName = "Ousama_lasri_CV.pdf";
+	  
+		fetch(pdfUrl)
+		  .then((response) => response.blob())
+		  .then((blob) => {
+			const url = window.URL.createObjectURL(new Blob([blob]));
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute("download", pdfName);
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+		  });
+	  }
 
 	/* ==========================================================================
    		Testomonial & Client Slider
