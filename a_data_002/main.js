@@ -42,11 +42,14 @@ $(document).ready(function() {
 	/* ==========================================================================
 		   Testomonial & Client Slider
 		  ========================================================================== */
-
-	function downloadPDF() {
+	function clickConsole() {
+		console.log("you have clicked the btn")
+	}
+	
+		  function downloadPDF() {
+		console.log("you have clicked the CV btn")
 		const pdfUrl = "../downloadable/Ousama_Lasri_CV.pdf";
 		const pdfName = "Ousama_lasri_CV.pdf";
-	  
 		fetch(pdfUrl)
 		  .then((response) => response.blob())
 		  .then((blob) => {
