@@ -42,9 +42,8 @@ $(document).ready(function() {
 	/* ==========================================================================
 		   Testomonial & Client Slider
 		  ========================================================================== */
-	function clickConsole() {
-		console.log("you have clicked the btn")
-	}
+	const CV_btn = document.querySelector('#download_CV');
+	CV_btn.addEventListener('click', downloadPDF)
 	
 		  function downloadPDF() {
 		console.log("you have clicked the CV btn")
