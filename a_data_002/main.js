@@ -42,25 +42,26 @@ $(document).ready(function() {
 	/* ==========================================================================
 		   Testomonial & Client Slider
 		  ========================================================================== */
-	const CV_btn = document.querySelector('#download_CV');
-	CV_btn.addEventListener('click', downloadPDF)
 	
-		  function downloadPDF() {
-		console.log("you have clicked the CV btn")
-		const pdfUrl = "../downloadable/Ousama_Lasri_CV.pdf";
-		const pdfName = "Ousama_lasri_CV.pdf";
-		fetch(pdfUrl)
-		  .then((response) => response.blob())
-		  .then((blob) => {
-			const url = window.URL.createObjectURL(new Blob([blob]));
-			const link = document.createElement("a");
-			link.href = url;
-			link.setAttribute("download", pdfName);
-			document.body.appendChild(link);
-			link.click();
-			link.remove();
-		  });
-	  }
+	// 	  const CV_btn = document.querySelector('#download_CV');
+	// CV_btn.addEventListener('click', downloadPDF)
+	
+	// 	  function downloadPDF() {
+	// 	console.log("you have clicked the CV btn")
+	// 	const pdfUrl = "../downloadable/Ousama_Lasri_CV.pdf";
+	// 	const pdfName = "Ousama_lasri_CV.pdf";
+	// 	fetch(pdfUrl)
+	// 	  .then((response) => response.blob())
+	// 	  .then((blob) => {
+	// 		const url = window.URL.createObjectURL(new Blob([blob]));
+	// 		const link = document.createElement("a");
+	// 		link.href = url;
+	// 		link.setAttribute("download", pdfName);
+	// 		document.body.appendChild(link);
+	// 		link.click();
+	// 		link.remove();
+	// 	  });
+	//   }
 
 	/* ==========================================================================
    		Testomonial & Client Slider
